@@ -1,0 +1,25 @@
+// const deletUsers = Handler.deleteOne(Usermodel);
+//  asyncHandler(async (req, res, next) => {
+//   const { id } = req.params;
+//   const Users = await Usermodel.findByIdAndDelete(id);
+//   if (!Users) {
+//     return next(new ApiError("not founded Users", 404));
+//   }
+//   res.status(204 /*كان موجود و اتمسح*/).send({ reso: "deleted" });
+// });
+
+// const slufgif=(req,res,next)=>{
+//   req.body.slug=slugify(req.body.name)
+// }
+
+//   let oreder = await ordermodel.findOne({ user: req.user._id });
+//   if (!oreder) {
+//     oreder = await ordermodel.create(req.body);
+//   }
+// const coupon=await couponmodel.find({})
+// if(!coupon){
+//     oreder.totalorderprice=cart.totalpriceafterdiscount
+// }
+// oreder.totalorderprice=cart.totalprice
+
+// https://x.com/urfav_hady/status/1766072496556531874
