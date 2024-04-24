@@ -28,6 +28,11 @@ app.use(morgan("dev"));
 app.use(cors());
 app.options("*", cors());
 app.use(compression());
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhook.webhook
+);
 
 // connect to DB
 const PORT = process.env.PORT || 8000;
@@ -35,11 +40,6 @@ const listen = app.listen(PORT, () => {
   console.log(`server is runing at ${PORT}`);
 });
 
-app.post(
-  "/webhook-checkout",
-  express.raw({ type: "application/json" }),
-  webhook.webhook
-);
 confirmrout(app);
 
 app.all("*", (req, res, next) => {
