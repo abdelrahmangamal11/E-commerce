@@ -13,6 +13,7 @@ const dbconnection = require("./config/database");
 const ApiError = require("./utils/ApiError");
 const globalError = require("./middleware/globalerror");
 const confirmrout = require("./Routes/index");
+const webhook = require("./services/control_order");
 
 dbconnection();
 
@@ -34,6 +35,11 @@ const listen = app.listen(PORT, () => {
   console.log(`server is runing at ${PORT}`);
 });
 
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhook.webhook
+);
 confirmrout(app);
 
 app.all("*", (req, res, next) => {

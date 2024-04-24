@@ -132,6 +132,22 @@ const checksession = asyncHandler(async (req, res, next) => {
   // 4)send session to response
   res.status(200).json({ message: "success", data: session });
 });
+
+const webhook = asyncHandler(async (req, res, next) => {
+  const sig = req.headers["stripe-signature"];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+});
 module.exports = {
   creatcashorder,
   filterforuser,
@@ -140,4 +156,5 @@ module.exports = {
   updateispaid,
   updatedelivered,
   checksession,
+  webhook,
 };
