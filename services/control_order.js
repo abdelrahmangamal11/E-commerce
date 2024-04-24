@@ -135,7 +135,7 @@ const checksession = asyncHandler(async (req, res, next) => {
 
 const webhook = asyncHandler(async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
-
+  console.log("ljnjlnljb");
   let event;
 
   try {
