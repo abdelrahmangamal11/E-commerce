@@ -35,11 +35,7 @@ const listen = app.listen(PORT, () => {
   console.log(`server is runing at ${PORT}`);
 });
 
-app.post(
-  "/webhook-checkout",
-  express.raw({ type: "application/json" }),
-  webhook.webhook
-);
+app.post("/", express.raw({ type: "application/json" }), webhook.webhook);
 confirmrout(app);
 
 app.all("*", (req, res, next) => {
