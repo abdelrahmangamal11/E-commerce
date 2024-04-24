@@ -13,26 +13,26 @@ const dbconnection = require("./config/database");
 const ApiError = require("./utils/ApiError");
 const globalError = require("./middleware/globalerror");
 const confirmrout = require("./Routes/index");
-const webhook = require("./services/control_order");
+const { webhook } = require("./services/control_order");
 
 dbconnection();
 
 // middleware
 
 const app = express();
-
-app.use(express.static(path.join(__dirname, "uploads")));
-app.use(express.json());
-
-app.use(morgan("dev"));
 app.use(cors());
 app.options("*", cors());
 app.use(compression());
 app.post(
   "/webhook-checkout",
   express.raw({ type: "application/json" }),
-  webhook.webhook
+  webhook
 );
+
+app.use(express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
+
+app.use(morgan("dev"));
 
 // connect to DB
 const PORT = process.env.PORT || 8000;
