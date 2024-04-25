@@ -135,7 +135,6 @@ const checksession = asyncHandler(async (req, res, next) => {
 
 const webhook = asyncHandler(async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
-  console.log("ouubuojb");
   let event;
 
   try {
@@ -148,7 +147,7 @@ const webhook = asyncHandler(async (req, res, next) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
   if (event.type === "checkout.session.completed") {
-    console.log("event completed...");
+    console.log("event completed...123");
   }
 });
 module.exports = {
