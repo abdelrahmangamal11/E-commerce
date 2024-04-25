@@ -147,7 +147,7 @@ const webhook = asyncHandler(async (req, res, next) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
   if (event.type === "checkout.session.completed") {
-    console.log("event completed...123");
+    console.log("event completed...1223");
   }
 });
 module.exports = {
