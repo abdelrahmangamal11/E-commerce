@@ -133,6 +133,8 @@ const checksession = asyncHandler(async (req, res, next) => {
   res.status(200).json({ message: "success", data: session });
 });
 
+// const creatcardorder = async (session) => {};
+
 const webhook = asyncHandler(async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
   let event;
@@ -148,6 +150,7 @@ const webhook = asyncHandler(async (req, res, next) => {
   }
   if (event.type === "checkout.session.completed") {
     console.log("event completed...1223");
+    console.log(event.data.object.client_reference_id);
   }
 });
 module.exports = {
