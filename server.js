@@ -23,11 +23,6 @@ const app = express();
 app.use(cors());
 app.options("*", cors());
 app.use(compression());
-app.post(
-  "/webhook-checkout",
-  express.raw({ type: "application/json" }),
-  webhook
-);
 
 app.use(express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
@@ -39,6 +34,11 @@ const PORT = process.env.PORT || 8000;
 const listen = app.listen(PORT, () => {
   console.log(`server is runing at ${PORT}`);
 });
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhook
+);
 
 confirmrout(app);
 
