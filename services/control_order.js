@@ -135,8 +135,8 @@ const checksession = asyncHandler(async (req, res, next) => {
 });
 
 const creatcardorder = async (session) => {
-  const cartId = await session.client_reference_id;
-  const shippingaddress = await session.metadata;
+  const cartId = session.client_reference_id;
+  const shippingaddress = session.metadata;
   const oderPrice = session.amount_total / 100;
 
   const cart = await cartmodel.findById(cartId);
