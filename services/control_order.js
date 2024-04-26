@@ -4,6 +4,7 @@ const ApiError = require("../utils/ApiError");
 const cartmodel = require("../model/Cartmodel");
 const ordermodel = require("../model/ordermodel");
 const productmodel = require("../model/producatsmodel");
+const usermodel = require("../model/UserModel");
 const Handler = require("./Handlerfactories");
 
 // @desc    create cash order
@@ -136,6 +137,20 @@ const checksession = asyncHandler(async (req, res, next) => {
 const creatcardorder = async (session) => {
   const cartId = await session.client_reference_id;
   const shippingaddress = await session.metadata;
+  const oderPrice = session.amount_total / 100;
+
+  const cart = await cartmodel.findById(cartId);
+  const user = await usermodel.findOne({ email: session.customer_email });
+  // 3) Create order with default paymentMethodType cash
+  const order = await ordermodel.create({
+    user: user._id,
+    oderPrice,
+    cartitem: cart.cartItems,
+    shippingaddress,
+    orderpaied: true,
+    orederedAt: Date.now(),
+    paymentmethod: "card",
+  });
 };
 
 const webhook = asyncHandler(async (req, res, next) => {
