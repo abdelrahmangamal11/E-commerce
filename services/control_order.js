@@ -151,6 +151,16 @@ const creatcardorder = async (session) => {
     orederedAt: Date.now(),
     paymentmethod: "card",
   });
+  const bulkopts = cart.cartItems.map((item) => ({
+    updateOne: {
+      filter: { _id: item.product },
+      update: { $inc: { quantity: -item.quantity, sold: +item.quantity } },
+    },
+  }));
+
+  const product = await productmodel.bulkWrite(bulkopts);
+  // 5) Clear cart depend on cartId
+  await cartmodel.findByIdAndDelete(cartId);
 };
 
 const webhook = asyncHandler(async (req, res, next) => {
@@ -167,10 +177,11 @@ const webhook = asyncHandler(async (req, res, next) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
   if (event.type === "checkout.session.completed") {
-    console.log("event completed...1223");
-    console.log(event.data.object.client_reference_id);
+    // console.log("event completed...1223");
+    // console.log(event.data.object.client_reference_id);
     creatcardorder(event.data.object);
   }
+  res.status(200).json({ recived: true });
 });
 module.exports = {
   creatcashorder,
